@@ -1,0 +1,35 @@
+{
+  tokens = [
+    space='regexp:\s+'
+    string = "regexp:\"[^\"]*\"|'[^']*'"
+    number = "regexp:(\+|\-)?\p{Digit}*"
+    id = "regexp:\p{Alpha}\w*"
+    comma = ","
+    colon = ":"
+    brace1 = "{"
+    brace2 = "}"
+    brack1 = "["
+    brack2 = "]"
+  ]
+  extends("array|object|json")=value
+}
+
+root ::= json
+json ::= array | object  { hooks=[wsBinders="null, null"] }
+value ::= string | number | json {name="value" hooks=[leftBinder="GREEDY_LEFT_BINDER"]}
+
+array ::= '[' [!']' item (!']' ',' item) *] ']' {pin(".*")=1 extends=json}
+private item ::= json {recoverWhile=recover}
+object ::= '{' [!'}' prop (!'}' ',' prop) *] '}' {pin(".*")=1 extends=json}
+prop ::= [] name ':' value {pin=1 recoverWhile=recover} // remove [] to make NAME mandatory
+name ::= id | string {name="name" hooks=[rightBinder="GREEDY_RIGHT_BINDER"]}
+private recover ::= !(',' | ']' | '}' | '[' | '{')
+
+<json>::=<array>|<object>
+<object>::="{"(<whitespace><string><whitespace>":"<whitespace><value>(","<string><whitespace>":"<whitespace><value>)*)?"}"
+<array>::="["(<value>(","<value>)*)?"]"
+
+<value>::=<whitespace>(<string>|<number>|<object>|<array>|"true"|"false"|"null")<whitespace>
+<string>
+<number>
+<whitespace>

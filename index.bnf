@@ -1,0 +1,91 @@
+ <MultiplicativeExpression>::=<Number>|
+	<MultiplicativeExpression>"*"<Number>|
+	<MultiplicativeExpression>"/"<Number>| 
+<AddtiveExpression>::=< MultiplicativeExpression>|
+	<AddtiveExpression>"+"<MultiplicativeExpression>|
+	<AddtiveExpression>"-"<MultiplicativeExpression>|  
+
+
+    'pa': 终结符
+    'gu': 
+    ## 不了解的时候
+    <word>::='pa'|'gu' 产生式
+    <ufo>::=<word> | <ufo><word>
+
+    ## 只会有单独的pa 不会有单独的gu
+
+    pa gu gu
+    gu gu gu pa
+    pa
+    <word>::="pa" "gu" "gu" | "gu" "gu" "gu" "pa" | "pa"
+    <ufo>::=<word> | <ufo><word>
+
+    ## pa不会连续出现
+   <word>::="pa" "gu" "gu"
+   <xiaoxi>::="gu" "gu" "gu" "pa" 
+   <aolandu>::="pa"
+   <ufo>::=<word>*<xiaoxi>?<aolandu>*
+
+   加减法
+   <Number> 
+   "+"
+    "-"
+    <op>::="+"|"-" 产生式
+    
+   <add>::=<add><op><Number> 
+   乘除法
+ <Number> 
+   "*"
+   "/"
+   <mulop>::="*" | "/"
+  
+  <mul>::=<mul><mulop><Number>
+  <add>::=<mul> |<add><op><mul>
+
+    "("
+    ")" 
+    "&"
+    "|"
+    "^"
+  
+  
+  <prim>::= "(" <add> ")" | <op><Number> 
+  <mul>::= <prim> | <mul><mulop><prim>
+<and>::=<mul>|<and>"&"<mul>
+<xor>::=<and>|<xor>"^"<and>
+<or>::=<xor>|<or>"|"<xor>
+
+  
+ <string> 双引号包括里面的东西 
+ <identifier> 尖括号里面的东西
+ 两个终结符
+
+"::"
+"="
+
+
+（3+5）* 7
+
+"::="
+
+<mulop>::="*" | "/"
+
+<bnf> ::=  <rule>*
+<rule> ::= <identifier>  "::="  <expression>
+
+
+
+
+
+<bnf> ::=  <rule>*
+<rule>       ::=  <identifier>  "::="  <expression>
+<expression> ::=  <term>  ("|" <term>)*
+<term>       ::=  <factor>+
+<factor>     ::=  <identifier> |
+                <string> |
+                "("  <expression>  ")""*"? |
+                <expression>  "?" |
+                <expression>"*"
+<identifier> ::=  " < "  any_character*  " > "
+
+<string> ::= " " "  any_character*  " " "
