@@ -11,12 +11,13 @@
 //   }
 // };
 
-const towSum = (nums, target) => {
-  const hash = {}
-  for (let i = 0;i < nums.length; i++) {
-    if (hash[target-nums[i]]){
-      return [i, hash.get(target - nums[i])]
-    }
-    hash[target-nums[i]] = i
-  }
-}
+// const towSum = (nums, target) => {
+//   const hash = {}
+//   for (let i = 0;i < nums.length; i++) {
+//     if (hash[target-nums[i]]){
+//       return [i, hash.get(target - nums[i])]
+//     }
+//     hash[target-nums[i]] = i
+//   }
+// }
+
