@@ -19,6 +19,7 @@
 
 let matrix = [[1,3,5,9],[2,1,3,4],[5,2,6,7],[6,8,4,3]]
 let n = matrix.length
+// 记录数组备忘录
 let men =  Array.from(new Array(4), () => new Array(4).fill(0))
 console.log(men)
 function minDist(i,j) {
