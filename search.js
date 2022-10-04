@@ -4,6 +4,7 @@ function search (nums, target){
     let [left,right] = [0,nums.length]
     while(left <= right) {
         let mid = (left + right) >> 1
+        //如果中间的等于直接return
         if (nums[mid] === target) return mid
         // 大于左移动 小于右移动
         if (nums[mid] > target) {
