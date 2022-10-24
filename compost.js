@@ -6,6 +6,13 @@ function compost(...fns) {
   })
 }
 
+function reverseArgs(fn) {
+  return function argsReversed(...args) {
+    return fn(...args.reverse());
+  }
+}
+
+const pipe = reverseArgs(compost)
 // 计算x除以y的余数
 const dividedBy = (y) => {
   return function forX(x) {
